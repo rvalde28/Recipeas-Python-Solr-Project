@@ -1,0 +1,47 @@
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/style.css') }}">
+</head>
+
+<body class="grad">
+	<h1 style="text-align:center">Recipeas</h1>
+	<div align="center">
+		{% for i in range(10) %}
+		{% if recipes[i] is defined %}
+		<form method = "post" action= "/selection">
+			<div name = "{{i}}">
+
+			<p>
+
+				<div style="width:40%; border-top: 1px solid black">
+					<div>
+					<div style="float:left">
+						<p/>
+						<img src="{{ recipes[i].imgadr  }}" width="{{ img_width }}" height="{{ img_height }}">
+					</div>
+					</div>
+					<div>
+					<div style="float:right">
+						<h2 style="text-align:right;">{{ recipes[i].name }}</h2>
+						<p style="text-align:right">{{ recipes[i].cal }} calories</p>
+						{% if recipes[i].prep != '' %}
+						<p style="text-align:right">{{ recipes[i].prep }} minutes</p>
+						{% else %}
+						<p style="text-align:right">Unspecified time</p>
+						{% endif %}
+						<input class = "recipe-button" type = "submit" border="0" name = "{{i}}" value = "Get this Recipe!">
+					</div>
+					</div>
+
+				</div>
+				<div style="clear:both"/><br>
+
+			</p>
+
+			</div>
+		</form>
+		{% endif %}
+		{% endfor %}
+	</div>
+</body>
+</html>

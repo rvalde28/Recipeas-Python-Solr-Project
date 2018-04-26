@@ -1,0 +1,46 @@
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/style.css') }}">
+</head>
+
+<body class="grad">
+	<h1 style="text-align:center; padding-top: 100px; font-size: 75px;" >Recipeas</h1>
+	<div align="center">
+	<form action="{{ url_for('results') }}" method="post">
+		
+        <div class = "main-block">
+    		<span class = "main-text">Ingredients to include:</span>
+    		<span class = "main-right"><input class="main-input" type="text" name="ing_include"></span>
+        </div>
+
+		<div style="clear:both"/>
+		<br>
+
+        <div class = "main-block">
+    		<span class = "main-text">Ingredients to exclude:</span>
+    		<span class = "main-right"><input class="main-input" type="text" name="ing_exclude"></span>
+        </div>
+        
+		<div style="clear:both"/>
+		<br>
+
+        <div class = "main-block">
+		    <span class = "main-text">Maximum preparation time:</span>
+    		<span class = "main-right"><input class="main-input" type="text" name="prep_time"></span>
+        </div>	
+    	<div style="clear:both"/>
+		<br>
+	
+        <div class = "main-block">
+    	    <span class = "main-text">Maximum calories:</span>
+    		<span class = "main-right"><input class="main-input"type="text" name="calories"></span>
+        </div>    
+
+  		<div style="clear:both"/>
+		<br>
+
+		<input class = "main-button" type="submit" name="submit" value="Search">
+	</form>
+	</div>
+</body>
+</html>

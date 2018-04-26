@@ -1,0 +1,49 @@
+span{
+    float:left;
+}
+.grad {
+/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#95e25a+0,b1e08b+3,e6ffdd+29,f5fff2+53,ffffff+99 */
+background: #95e25a; /* Old browsers */
+background: -moz-linear-gradient(top, #95e25a 0%, #b1e08b 3%, #e6ffdd 29%, #f5fff2 53%, #ffffff 99%); /* FF3.6-15 */
+background: -webkit-linear-gradient(top, #95e25a 0%,#b1e08b 3%,#e6ffdd 29%,#f5fff2 53%,#ffffff 99%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom, #95e25a 0%,#b1e08b 3%,#e6ffdd 29%,#f5fff2 53%,#ffffff 99%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#95e25a', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
+}
+
+.main-block{
+    left: 20%;
+    right: 20%;
+    width: 50%;
+    display: inline-block;
+}
+
+.main-right{
+    float: right;
+}
+.main-text{
+    line-height: 1.6;
+    text-align: left;
+    width: 300px;
+    height: 50px;
+    font-size: 25px;
+}   
+
+.main-input{
+    width: 300px;
+    height: 30px;
+    font-size: 25px;
+    float: right;
+}
+
+.main-button{
+    height:50px;
+    width: 150px;
+    font-size: 26px;  
+}
+.recipe-button{
+    float:right;
+}
+.frame{
+    max-width: 100%;
+    max-height:100%;
+}
