@@ -42,17 +42,19 @@ def parse_time(time_list):
 def index():
     return render_template('index.html')
 
+#form for the results from the main page
+#gets the results from the user and connects
+#to the solr database to make the query
 @app.route('/results', methods=['POST'])
 def results():
-#mine#
     start = 0
     rows = 10
-#mine
     ing_include = request.form['ing_include']
     ing_exclude = request.form['ing_exclude']
     spec_time = request.form['prep_time']
     spec_cal = request.form['calories']
 
+    #current database is localhosted via port 8983
     url_query = "http://localhost:" + str(solr_port) + "/solr/recipeas/select?q="
 
     ing_include_list = ing_include.split(", ")
@@ -66,26 +68,24 @@ def results():
         for ing in ing_exclude_list:
             url_query = url_query + "-ingredients:" + ing + "%20"
 
-
+    #makes connections to solr database
     connection = urlopen(url_query)
     response = simplejson.load(connection)
-
-##mine
     maxDocs = response['response']['numFound']
 
-    print (maxDocs)
+    #selects up to 10 random results based on response
     start = random.randint(0,maxDocs-11)
     startString = "&rows="+ str(rows) +"&start="+ str(start)
     
 
     connection = urlopen(url_query + startString)
     response = simplejson.load(connection)
-    print (url_query + startString)
+
     solr_link.append(url_query + startString)
     html_counter.append(html_counter[0]+1)
-    print (solr_link)
 
-##Mie
+    #gets the the ready information, recipe name, the image from the query
+    #then it calls a template to render this information to the html page
     recipes = []
     for doc in response['response']['docs']:
         calories = parse_calories(doc['nutrition_facts'])
@@ -106,8 +106,11 @@ def results():
         else:
             recipes.append(recipe(recipe_name, '', calories, image_url))
 
+    #renders the template results.html
     return render_template('results.html', recipes = recipes, img_width = 200, img_height = 100)
 
+#used to get the selected recipe the user wants more information of
+#gets results via button selected the returns the result as an html page
 @app.route("/selection",methods=['GET','POST'])
 def selection():
     print(request.method)
@@ -174,6 +177,7 @@ def selection():
         else:
             return render_template('index.html')
 
+#gets the recipe that the user clicked on 
 def getRecipe(number):
     counter = 0
     recipeName = ''
@@ -182,17 +186,9 @@ def getRecipe(number):
     ready = []
     img = ''
     directions = []
-    #print("solr link IN FUNCION\n\n")
-    #print(solr_link)
-    #print("\n\n")
     connection = urlopen(solr_link[html_counter[0]])
     response = simplejson.load(connection)
-    #print (response) 
-    print ("HEE")
-    
-    print(number)
 
-    print("\n\n")
     for document in response['response']['docs']:
         if(counter == number):
             print ("found")
@@ -205,10 +201,10 @@ def getRecipe(number):
             directions = document['directions']
         counter+=1
 
-
-    print("END")
+    #renders title for the recipe
     htmlRecipe = '<div> <h1>%s</h1> </div>' % (str(recipeName))
 
+    #gets the size of the image if there is an image
     width = 0
     height = 0
     temp_str = ''
@@ -220,11 +216,6 @@ def getRecipe(number):
                 size_str = size_str + char
             if (char == '/'):
                 back = back + 1
-
-        print(size_str)
-            
-
-        
 
         for char in size_str:
             if(char != 'x' and width == 0):
@@ -238,9 +229,9 @@ def getRecipe(number):
 
         height = int(temp_str)
 
-        print (width)
-        print (height);
-
+    #makes the html source code for the entire recipe
+    #things it displays are the recipe name, the image, the ingredients 
+    #the directions, and nutritional facts
     html_image = '<div> <iframe src="%s" width="%d" height = "%d"> </iframe> </div>' % (str(img), width, height)
     html_ing = ''
     for ingre in ingredients:
